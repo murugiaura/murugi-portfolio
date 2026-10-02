@@ -48,7 +48,7 @@ export const journeySteps: JourneyStep[] = [
       tags: ["Data Cleaning", "Pivot Tables"], // REPLACE with what you used
       github: "https://github.com/murugiaura/Coffee-Orders-Excel-Dashboard",
       images: [
-         "/images/excel1.jpeg",
+         "/images/excel2.jpeg",
         
       ],
     },
