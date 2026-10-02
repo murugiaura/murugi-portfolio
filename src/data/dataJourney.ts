@@ -1,12 +1,22 @@
 import { Database, LayoutDashboard, Table, Terminal } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
+
+export type JourneyWork = {
+  title: string;
+  description: string;
+  tags: string[];
+  github: string; // link to the repo or folder
+  images: string[]; // screenshots, e.g. "/images/data/excel/cleaning.png"
+};
+
 export type JourneyStep = {
   title: string;
   icon: LucideIcon;
   description: string;
   topics: string[];
   inProgress?: boolean;
+  work?: JourneyWork[]; // add this line
 };
 
 export const journeyIntro: string[] = [
@@ -25,12 +35,25 @@ export const journeySteps: JourneyStep[] = [
     topics: ["Joins", "CTEs", "Subqueries", "Window Functions", "Aggregations"],
   },
   {
-    title: "Excel",
-    icon: Table,
-    description:
-      "Using Excel for data cleaning, analysis, pivot tables, lookups, conditional logic, charts, and transforming raw data into useful information.",
-    topics: ["Data Cleaning", "Pivot Tables", "Lookups", "Conditional Logic", "Charts"],
-  },
+  title: "Excel",
+  icon: Table,
+  description:
+    "Using Excel for data cleaning, analysis, pivot tables, lookups, conditional logic, charts, and transforming raw data into useful information.",
+  topics: ["Data Cleaning", "Pivot Tables", "Lookups", "Conditional Logic", "Charts"],
+  work: [
+    {
+      title: "Coffee Sales Dashboard",
+      description:
+        "Performed data cleaning,analysis and visualized the data ",
+      tags: ["Data Cleaning", "Pivot Tables"], // REPLACE with what you used
+      github: "https://github.com/murugiaura/Coffee-Orders-Excel-Dashboard",
+      images: [
+         "/images/excel1.jpeg",
+        
+      ],
+    },
+  ],
+},
   {
     title: "Power BI",
     icon: LayoutDashboard,

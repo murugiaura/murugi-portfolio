@@ -1,16 +1,22 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronRight, Rocket } from "lucide-react";
+import { ArrowUpRight, ChevronRight, Rocket } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
 import {
   currentlyBuilding,
   journeyIntro,
   journeySteps,
   workflow,
+  type JourneyStep,
 } from "@/data/dataJourney";
+import { contact } from "@/data/contact";
+import WorkModal from "./WorkModal";
 
 export default function DataJourney() {
+  const [active, setActive] = useState<JourneyStep | null>(null);
+
   return (
     <section id="data-journey" className="bg-bg-secondary py-24">
       <div className="mx-auto max-w-6xl px-6">
@@ -58,8 +64,10 @@ export default function DataJourney() {
 
         {/* Tool cards */}
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {journeySteps.map(
-            ({ title, icon: Icon, description, topics, inProgress }, i) => (
+          {journeySteps.map((step, i) => {
+            const { title, icon: Icon, description, topics, inProgress, work } =
+              step;
+            return (
               <motion.article
                 key={title}
                 initial={{ opacity: 0, y: 30 }}
@@ -100,9 +108,26 @@ export default function DataJourney() {
                     </li>
                   ))}
                 </ul>
+
+                {/* Work link */}
+                <div className="mt-auto pt-6">
+                  {work && work.length > 0 ? (
+                    <button
+                      onClick={() => setActive(step)}
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition hover:text-text"
+                    >
+                      View my work
+                      <ArrowUpRight className="h-4 w-4" />
+                    </button>
+                  ) : (
+                    <span className="text-xs text-muted">
+                      Projects coming soon
+                    </span>
+                  )}
+                </div>
               </motion.article>
-            )
-          )}
+            );
+          })}
         </div>
 
         {/* Currently building */}
@@ -121,9 +146,20 @@ export default function DataJourney() {
             <p className="mt-2 text-sm leading-relaxed text-muted sm:text-base">
               {currentlyBuilding}
             </p>
+            <a
+              href={contact.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-2 rounded-lg border border-primary px-4 py-2 text-sm font-medium transition hover:bg-primary/10"
+            >
+              <FaGithub className="h-4 w-4" />
+              See my work on GitHub
+            </a>
           </div>
         </motion.div>
       </div>
+
+      <WorkModal step={active} onClose={() => setActive(null)} />
     </section>
   );
 }
